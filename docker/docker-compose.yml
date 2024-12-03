@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  maildev:
+    image: maildev/maildev:latest
+    container_name: maildev
+    ports:
+      - "1080:1080" # Expose web UI on http://localhost:1080
+      - "1025:1025" # Expose SMTP server on localhost:1025
+    environment:
+      MAILDEV_INCOMING_USER: "root"  # Optional: SMTP username (leave blank for no auth)
+      MAILDEV_INCOMING_PASS: "root"  # Optional: SMTP password (leave blank for no auth)
