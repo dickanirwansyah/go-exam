@@ -15,4 +15,9 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/api/category/create", controller.CreateQuestionCategory)
 	app.Put("/api/category/update", controller.UpdateQuestionCategory)
 	app.Get("/api/category/find/:id", controller.GetQuestionCategory)
+	app.Get("/api/category/list", controller.PageDataQuestionCategory)
+
+	app.Get("/api/account/list", controller.PageAccount)
+	app.Post("/api/account/upload", controller.UploadImage)
+	app.Static("/api/account/image", "./upload")
 }

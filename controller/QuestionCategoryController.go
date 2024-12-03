@@ -2,6 +2,7 @@ package controller
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/dickanirwansyah/go-examp/database"
 	"github.com/dickanirwansyah/go-examp/model"
@@ -103,4 +104,12 @@ func HelperGetQuestionCategoryByID(id string) (*model.QuestionCategory, error) {
 		return nil, err
 	}
 	return &existingCategory, nil
+}
+
+func PageDataQuestionCategory(c *fiber.Ctx) error {
+
+	page, _ := strconv.Atoi(c.Query("page", "1"))
+	limitData, _ := strconv.Atoi(c.Query("size", "5"))
+
+	return model.GenericPaginate(c, database.DB, &model.QuestionCategory{}, page, limitData)
 }
