@@ -29,6 +29,27 @@ type PayloadUploadImage struct {
 	ImageProfileBase64 string `json:"image_profile_base64"`
 }
 
+func GetAccountById(c *fiber.Ctx) error {
+
+	id := c.Params("id")
+	var currentErrors []string
+
+	var existingAccount model.Accounts
+	if err := database.DB.Where("id = ?", id).First(&existingAccount).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			currentErrors = append(currentErrors, "Account id is not found !")
+		} else {
+			currentErrors = append(currentErrors, "Something went wrong !")
+		}
+	}
+
+	if len(currentErrors) > 0 {
+		return util.ErrorResponse(c, fiber.StatusBadRequest, currentErrors)
+	}
+
+	return util.SuccessResponse(c, fiber.StatusOK, existingAccount)
+}
+
 func UploadImage(c *fiber.Ctx) error {
 
 	var payloadUploadImage PayloadUploadImage

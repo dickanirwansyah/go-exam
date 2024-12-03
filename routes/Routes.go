@@ -20,4 +20,5 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/api/account/list", controller.PageAccount)
 	app.Post("/api/account/upload", controller.UploadImage)
 	app.Static("/api/account/image", "./upload")
+	app.Get("/api/account/find/:id", controller.GetAccountById)
 }
